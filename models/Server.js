@@ -25,6 +25,8 @@ class Server {
         this.app.use(express.static(path.resolve(__dirname, '../public')));
         // CORS domian restrictions
         this.app.use(cors());
+        // API's endpoints
+        this.app.use('/api/login/',require('../router/auth'));
     }
 
     settingSockets(){
