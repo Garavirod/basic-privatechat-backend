@@ -3,6 +3,8 @@ const authController = require('../controllers/auth');
 const { check } = require('express-validator');
 const { fieldValidators } = require('../middlewares/FieldValidators');
 const router = Router();
+
+
 /* ++++++++++++++++++++++++++++ */
 /* +++++++++++ POST +++++++++++ */
 /* ++++++++++++++++++++++++++++ */
