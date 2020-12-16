@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const { generateJWT } = require('../helpers/jwt');
 const controllers = {};
 
 /* ++++++++++++++++++++++++++++ */
@@ -34,10 +35,14 @@ controllers.registerNewUser = async (req, res) =>{
         // Save user on DB
         await user.save();
 
+        // Generate JWT
+        const token = await generateJWT( user.id );
 
-        // response
+
+        // Response
         res.status(200).json({
-            email,password, name
+            user,
+            token
         });
 
     } catch (error) {
