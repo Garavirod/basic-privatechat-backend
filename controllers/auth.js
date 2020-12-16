@@ -98,9 +98,21 @@ controllers.login = async(req, res) =>{
 
 /* Revalidate token */
 controllers.revalidateToken = async (req,res) =>{
+
+    // Obtain uid from request previously added on middleware
+    const uid = req.uid;
+
+    // Generate a new JWT
+    const token =  await generateJWT( uid );
+
+    // User data
+    const user = await User.findById(uid);
+    
+    // Response
     res.json({
         ok:true,
-        user:'RENEW',
+        user,
+        token        
     })
 };
 
