@@ -61,11 +61,39 @@ controllers.registerNewUser = async (req, res) =>{
 controllers.login = async(req, res) =>{
     
     const { email, password } = req.body;
-    res.json({
-        ok:true,
-        user:'LOGIN',
-        body:{email, password}
-    })
+
+
+    try {
+        // Verify if user exist
+        const userDB = await User.findOne({email});        
+        if( !userDB ){
+            return res.status(404).json({ok:false, msg:'User not exist'});
+        }
+
+        // Verify password
+        const validPassword = bcrypt.compareSync( password, userDB.password );
+        if( !validPassword ){
+            return res.status(400).json({ok:false, msg:'Incorrect credentials'});
+        }
+
+        // Generate JWT
+        const token = await generateJWT( userDB.id );
+
+        // Response
+        res.status(200).json({
+            ok:true,
+            user: userDB,
+            token:token       
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(
+            {
+                ok:false,
+                msg: 'Calls for the administrator'
+            }
+        );
+    }
 };
 
 /* Revalidate token */
