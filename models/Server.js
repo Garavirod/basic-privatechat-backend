@@ -29,6 +29,8 @@ class Server {
         this.app.use( express.json() )
         // API's endpoints
         this.app.use('/api/login/',require('../router/auth'));
+        this.app.use('/api/messages/',require('../router/messages'));
+
     }
 
     settingSockets(){
