@@ -7,15 +7,15 @@ class Sockets{
     socketEvents(){
         // On Connection Where 'socket' is the client connected
         this.io.on('connection', (socket) => {                 
-            // Events on 'msg-to-server'
-            socket.on('msg-to-server',(mess)=>{
-                console.log(mess);
-                // If we change io by socket we emit data for all and socket is just for the instance
-                this.io.emit('msg-server',mess);
-            });
-
+            // Validate JWT
+            // If token is no valid, disconnect
+            // What user active is ?
+            // Emmit all active users
+            // Socket Join by uid
+            // Hear when a user sends a message
+            // Disconnect user an set user off on DBB   
+                    
          });
     }
 }
-
 module.exports = Sockets;
