@@ -1,4 +1,4 @@
-const { userLogged, userLogOut } = require("../controllers/sockets");
+const { userLogged, userLogOut, getUsers } = require("../controllers/sockets");
 const { verifyJWT } = require("../helpers/jwt");
 
 class Sockets{
@@ -22,12 +22,15 @@ class Sockets{
             await userLogged(uid);                      
             // Validate JWT
             // Emmit all active users
+            this.io.emit('lista-users', await getUsers()); //await beacuse it's a promise
             // Socket Join by uid
             // Hear when a user sends a message
             // Disconnect user an set user off on DBB   
             socket.on('disconnect', async () => { 
                 await userLogOut(uid);
                 console.log('client disconnect ', uid);
+                this.io.emit('lista-users', await getUsers()); //await beacuse it's a promise
+
             });
          });
     }
