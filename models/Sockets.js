@@ -15,9 +15,8 @@ class Sockets{
             // If token is no valid, disconnect
             if (!isValid) {
                 // Validate JWT
-                console.log('socket was not identifyed');
-                socket.disconnect();
-                return;                 
+                console.log('socket was not identifyed');                
+                return socket.disconnect();                 
             }
             // What user active is ?
             await userLogged(uid);                      
@@ -29,8 +28,8 @@ class Sockets{
             socket.on('personal-message', async ( payload ) => {
                 const message = await saveMessage( payload );
                 // Send message to person in room chat with name 'uid' (to)
-                this.io.to(payload.to).emit('personal-message',{message});
-                this.io.to(payload.from).emit('personal-message',{message});
+                this.io.to(payload.to).emit('personal-message',message);
+                this.io.to(payload.from).emit('personal-message',message);
             });
             // Disconnect user an set user off on DBB   
             socket.on('disconnect', async () => { 
